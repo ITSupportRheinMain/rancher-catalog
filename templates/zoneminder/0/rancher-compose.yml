@@ -1,0 +1,23 @@
+version: '2'
+
+catalog:
+
+  name: zoneminder
+  version: 0.0.1
+  description: zoneminder
+  questions:
+    - variable: ZONEMINDER_PORT
+      label: Port
+      default: 8085
+      required: true
+      type: int
+
+services:
+
+  db:
+    scale: 1
+    start_on_create: true
+
+  web:
+    scale: 1
+    start_on_create: true

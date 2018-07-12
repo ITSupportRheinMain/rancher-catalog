@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+
+  db:
+    image: mysql/mysql-server:5.7
+    environment:
+      TZ: Europe/London
+      MYSQL_USER: "zmuser"
+      MYSQL_PASSWORD: "zmpass"
+      MYSQL_DATABASE: "zm"
+      MYSQL_ROOT_PASSWORD: "mysqlpsswd"
+      MYSQL_ROOT_HOST: "%"
+    labels:
+      io.rancher.container.hostname_override: container_name
+
+  web:
+    image: quantumobject/docker-zoneminder
+    environment:
+      TZ: Europe/London
+      SERVICE_PORTS: "80"
+      ZM_DB_HOST: db
+      ZM_SERVER_HOST: localhost
+    ports:
+       - ${ZONEMINDER_PORT}:80
+    links:
+      - db:db
+    labels:
+      io.rancher.container.hostname_override: container_name
+
